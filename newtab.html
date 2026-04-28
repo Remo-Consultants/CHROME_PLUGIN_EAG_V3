@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Command Center</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="bg-layer animate-bg"></div>
+  <div class="glow-layer"></div>
+
+  <main class="dashboard-container">
+    <header class="top-nav glass-card glass-panel">
+      <div class="nav-left">
+        <h1 class="gradient-text">Command Center</h1>
+        <p id="todayLabel" class="date-label">Loading date...</p>
+      </div>
+      <div class="nav-right">
+        <div class="search-box">
+          <label for="locationInput" class="sr-only">Location</label>
+          <input id="locationInput" type="text" placeholder="Set Location (e.g. Bengaluru)" />
+          <button id="saveLocationBtn" class="btn-primary">Update</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="master-grid">
+
+      <!-- Weather Widget -->
+      <section class="bento-item weather-widget glass-card" id="weatherCard">
+        <div class="widget-header">
+          <h2>Weather Focus</h2>
+          <span id="weatherStatus" class="status-badge">Fetching...</span>
+        </div>
+        <div class="weather-inner">
+          <div id="weatherVisual" class="weather-hero">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+              <div class="hero-top">
+                <p id="weatherLocationLabel">--</p>
+                <p id="weatherDateLabel">--</p>
+              </div>
+              <div class="hero-main">
+                <div class="temp-group">
+                  <span id="weatherSymbol" class="weather-icon">--</span>
+                  <strong id="temperatureValue">--</strong>
+                </div>
+                <p id="weatherCondition">Condition</p>
+              </div>
+            </div>
+          </div>
+          <div class="weather-details">
+            <div class="metrics-grid">
+              <div class="metric-box">
+                <span class="metric-label">AQI</span>
+                <strong id="aqiValue" class="metric-value">--</strong>
+              </div>
+              <div class="metric-box">
+                <span class="metric-label">Pressure</span>
+                <strong id="pressureValue" class="metric-value">--</strong>
+              </div>
+              <div class="metric-box">
+                <span class="metric-label">Humidity</span>
+                <strong id="humidityValue" class="metric-value">--</strong>
+              </div>
+              <div class="metric-box">
+                <span class="metric-label">Wind</span>
+                <strong id="windValue" class="metric-value">--</strong>
+              </div>
+              <div class="metric-box">
+                <span class="metric-label">Rain</span>
+                <strong id="precipValue" class="metric-value">--</strong>
+              </div>
+              <div class="metric-box">
+                <span class="metric-label">Feels Like</span>
+                <strong id="apparentTempValue" class="metric-value">--</strong>
+              </div>
+            </div>
+            <div class="forecast-section">
+              <h3>7-Day Forecast</h3>
+              <div id="forecastList" class="forecast-track"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Markets Widget -->
+      <section class="bento-item glass-card stock-widget" id="stockCard">
+        <div class="widget-header" style="flex-wrap: wrap; gap: 10px;">
+          <h2>Markets (Hourly)</h2>
+          <div class="stock-input-group" style="display:flex; gap:8px; align-items:center;">
+            <input type="text" id="stockInput" placeholder="Symbol (e.g. TSLA)"
+              style="width:150px; padding:2px 8px; font-size: 0.9rem; background: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,1);" />
+            <button id="addStockBtn" class="btn-primary"
+              style="padding:6px 10px; font-size:1.1rem; line-height: 1;">+</button>
+          </div>
+        </div>
+        <div id="stockList" class="stocks-grid scrollable"></div>
+      </section>
+
+      <!-- Hacker News Widget -->
+      <section class="bento-item glass-card hn-widget" id="hnCard">
+        <div class="widget-header">
+          <h2>Tech News</h2>
+        </div>
+        <ul id="hnList" class="news-feed scrollable"></ul>
+      </section>
+
+
+
+      <!-- Pomodoro Widget -->
+      <section class="bento-item glass-card pomodoro-widget">
+        <div class="widget-header">
+          <h2>Focus Period</h2>
+        </div>
+        <div class="pomodoro-container">
+          <div class="pomodoro-timer">
+            <svg class="progress-ring" viewBox="0 0 120 120">
+              <circle class="progress-ring__circle bg" cx="60" cy="60" r="54" />
+              <circle id="pomodoroProgress" class="progress-ring__circle fg" cx="60" cy="60" r="54" />
+            </svg>
+            <div id="pomodoroDisplay" class="time-display">25:00</div>
+          </div>
+          <div class="pomodoro-controls">
+            <button id="pomodoroModeBtn" class="btn-ghost">Mode</button>
+            <button id="pomodoroStartBtn" class="btn-primary">Start</button>
+            <button id="pomodoroPauseBtn" class="btn-secondary" style="display:none;">Pause</button>
+            <button id="pomodoroResetBtn" class="btn-ghost">Reset</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Task List Widget -->
+      <section class="bento-item glass-card tasks-widget">
+        <div class="widget-header">
+          <h2>Active Tasks</h2>
+        </div>
+        <div class="task-input-group">
+          <input type="text" id="taskInput" placeholder="What needs to be done?" />
+          <button id="addTaskBtn" class="btn-primary">+</button>
+        </div>
+        <ul id="taskList" class="task-list scrollable"></ul>
+      </section>
+
+      <!-- Chrome Monitor Widget -->
+      <section class="bento-item glass-card chrome-widget" id="chromeCard">
+        <div class="widget-header">
+          <h2>Chrome Focus</h2>
+        </div>
+
+        <div class="chrome-speed">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+            <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted);">Internet Speed</div>
+            <button id="runSpeedTestBtn" class="btn-ghost" style="padding: 2px 6px; font-size: 0.75rem; border-radius: 4px;">Run Test</button>
+          </div>
+          <div class="speed-gauge-container">
+            <svg class="speed-gauge" viewBox="0 0 100 50">
+              <path class="gauge-bg" d="M 10 50 A 40 40 0 0 1 90 50" fill="none" />
+              <path id="speedGaugePath" class="gauge-fg" d="M 10 50 A 40 40 0 0 1 90 50" fill="none"
+                stroke-dasharray="125.6" stroke-dashoffset="125.6" />
+            </svg>
+            <div class="speed-value">
+              <strong id="speedValue">--</strong><span style="font-size:0.8rem; color:var(--text-muted);"> Mbps</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="chrome-metrics">
+          <div class="metric-box" style="width:100%; grid-column: 1 / -1;">
+            <span class="metric-label">Memory Usage</span>
+            <strong id="memoryLabel" class="metric-value">--</strong>
+            <div class="memory-graph-wrapper">
+              <svg id="memoryGraphSvg" viewBox="0 0 100 30" preserveAspectRatio="none"
+                style="width:100%; height:30px; margin-top:8px; overflow:visible;">
+                <polygon id="memoryGraphArea" points="0,30 100,30" fill="rgba(246, 135, 179, 0.2)" />
+                <polyline id="memoryGraphLine" points="" fill="none" stroke="var(--accent-primary)" stroke-width="2"
+                  vector-effect="non-scaling-stroke" />
+              </svg>
+            </div>
+          </div>
+          <div class="metric-box" style="width:100%;">
+            <span class="metric-label">Active Tabs</span>
+            <strong id="tabCountLabel" class="metric-value">--</strong>
+          </div>
+        </div>
+
+        <div class="chrome-actions">
+          <button id="clearCacheBtn" class="btn-secondary btn-sm">
+            <span class="action-icon">🗑️</span> Clear Cache
+          </button>
+          <button id="clearHistoryBtn" class="btn-secondary btn-sm">
+            <span class="action-icon">⏳</span> Clear History
+          </button>
+        </div>
+      </section>
+
+      <!-- News Grid -->
+      <section class="bento-item glass-card news-widget" id="newsCard">
+        <div class="widget-header">
+          <h2>Global Connect (Top News)</h2>
+        </div>
+        <div class="news-board">
+          <div class="news-col">
+            <h3 class="category-title">Sports</h3>
+            <ul id="sportsNews" class="news-feed scrollable mini"></ul>
+          </div>
+          <div class="news-col">
+            <h3 class="category-title">Local</h3>
+            <ul id="localNews" class="news-feed scrollable mini"></ul>
+          </div>
+          <div class="news-col">
+            <h3 class="category-title">Geopolitics</h3>
+            <ul id="geoNews" class="news-feed scrollable mini"></ul>
+          </div>
+          <div class="news-col">
+            <h3 class="category-title">Tech</h3>
+            <ul id="techNews" class="news-feed scrollable mini"></ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Clocks Widget -->
+      <section class="bento-item glass-card clocks-widget" id="clockCard">
+        <div class="widget-header">
+          <h2>Global Timezones</h2>
+        </div>
+        <div class="clock-track">
+          <div id="clockList" class="clocks-grid"></div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+  <script src="script.js"></script>
+</body>
+
+</html>

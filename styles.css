@@ -1,0 +1,1149 @@
+:root {
+  --bg-base: #faf9f8;
+  --bg-surface: rgba(255, 255, 255, 0.6);
+  --border-glow: rgba(255, 255, 255, 0.9);
+  --border-glass: rgba(255, 255, 255, 0.5);
+  --text-main: #2d3748;
+  --text-muted: #718096;
+  --accent-primary: #f687b3;
+  /* Soft Pink */
+  --accent-primary-hover: #ed64a6;
+  --accent-secondary: #9f7aea;
+  /* Soft Purple */
+  --accent-success: #48bb78;
+  --accent-danger: #f56565;
+  --radius-lg: 28px;
+  --radius-md: 20px;
+  --radius-sm: 12px;
+  --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --glass-shadow: 0 10px 40px 0 rgba(112, 144, 176, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background-color: var(--bg-base);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Global City Background */
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  transition: background-image 1.5s ease-in-out;
+  background-color: var(--bg-base);
+  /* fallback */
+}
+
+/* Glass overlay so UI remains highly readable but image is visible */
+.glow-layer {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.2) 100%);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Typography & Utilities */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #d53f8c, #6b46c1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+.mt-gap {
+  margin-top: 24px;
+}
+
+.scrollable {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(203, 213, 224, 0.8) transparent;
+}
+
+.scrollable::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+  background-color: rgba(203, 213, 224, 0.8);
+  border-radius: 6px;
+}
+
+/* Generic Layout */
+.dashboard-container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Elegant Glass Cards */
+.glass-card {
+  background: var(--bg-surface);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-shadow);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.2));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 50px 0 rgba(112, 144, 176, 0.18), 0 0 0 1px rgba(255, 255, 255, 1);
+}
+
+/* Top Nav */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+}
+
+.top-nav h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.date-label {
+  color: var(--text-muted);
+  font-size: 1rem;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.search-box {
+  display: flex;
+  gap: 12px;
+}
+
+input[type="text"] {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(226, 232, 240, 1);
+  color: var(--text-main);
+  padding: 12px 18px;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  outline: none;
+  transition: var(--transition);
+  min-width: 260px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+input[type="text"]::placeholder {
+  color: #a0aec0;
+}
+
+input[type="text"]:focus {
+  background: #ffffff;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(246, 135, 179, 0.2);
+}
+
+button {
+  font-family: inherit;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  padding: 12px 24px;
+  cursor: pointer;
+  border: none;
+  transition: var(--transition);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-primary), #d53f8c);
+  color: white;
+  box-shadow: 0 4px 14px rgba(213, 63, 140, 0.3);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--accent-primary-hover), #b83280);
+  box-shadow: 0 6px 20px rgba(213, 63, 140, 0.4);
+}
+
+.btn-secondary {
+  background: rgba(45, 55, 72, 0.05);
+  color: var(--text-main);
+}
+
+.btn-secondary:hover {
+  background: rgba(45, 55, 72, 0.1);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.btn-ghost:hover {
+  color: var(--text-main);
+  background: rgba(45, 55, 72, 0.03);
+}
+
+.widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+}
+
+.widget-header h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.status-badge {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  background: rgba(45, 55, 72, 0.06);
+  border-radius: 20px;
+  color: var(--text-muted);
+}
+
+/* Master Grid Layout */
+.master-grid {
+  display: grid;
+  grid-template-columns: 2fr 1.2fr 1.2fr 0.7fr;
+  gap: 20px;
+}
+
+#weatherCard {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+}
+
+#stockCard {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+#hnCard {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.pomodoro-widget {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.tasks-widget {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+#clockCard {
+  grid-column: 4;
+  grid-row: 2 / span 2;
+  display: flex;
+  flex-direction: column;
+}
+
+#newsCard {
+  grid-column: 1 / span 3;
+  grid-row: 3;
+}
+
+#chromeCard {
+  grid-column: 4;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+}
+
+.chrome-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+.chrome-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.chrome-actions button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.action-icon {
+  font-size: 1.1rem;
+}
+
+.btn-sm {
+  padding: 8px 16px;
+  font-size: 0.95rem;
+}
+
+/* Chrome Monitor Extras */
+.chrome-speed {
+  margin-bottom: 20px;
+}
+.speed-gauge-container {
+  position: relative;
+  width: 100%;
+  max-width: 120px;
+  margin: 0 auto;
+}
+.speed-gauge {
+  width: 100%;
+  overflow: visible;
+}
+.gauge-bg {
+  stroke: rgba(226, 232, 240, 0.4);
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+.gauge-fg {
+  stroke: var(--accent-success);
+  stroke-width: 6;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s ease, stroke 0.5s ease;
+}
+.speed-value {
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+.speed-value strong {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+.memory-graph-wrapper {
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+  padding: 4px;
+}
+
+/* Weather Widget */
+.weather-widget {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.weather-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  gap: 16px;
+  flex: 1;
+}
+
+.weather-hero {
+  border-radius: var(--radius-md);
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  min-height: 200px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.85) 100%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  padding: 10px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hero-top {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.temp-group {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+}
+
+.weather-icon {
+  font-size: 3rem;
+}
+
+#temperatureValue {
+  font-size: 3rem;
+  font-weight: 500;
+  line-height: 1;
+  color: #1a202c;
+  letter-spacing: -2px;
+}
+
+#weatherCondition {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-top: 8px;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.weather-details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.metric-box {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 1);
+  border-radius: var(--radius-sm);
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}
+
+.metric-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.metric-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.forecast-section h3 {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.forecast-track {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.forecast-day {
+  display: grid;
+  grid-template-columns: 35px 65px 1fr auto;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  font-weight: 300;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.forecast-day:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.forecast-day>span:nth-child(1) {
+  font-size: 1.3rem;
+}
+
+/* Wait, remove side-column definition completely, it's not needed anymore */
+
+/* Pomodoro Widget */
+.pomodoro-widget {
+  padding: 24px;
+  text-align: center;
+}
+
+.pomodoro-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.pomodoro-timer {
+  position: relative;
+  width: 160px;
+  height: 160px;
+}
+
+.progress-ring {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.progress-ring__circle {
+  fill: transparent;
+  stroke-width: 8;
+}
+
+.progress-ring__circle.bg {
+  stroke: rgba(226, 232, 240, 0.8);
+}
+
+.progress-ring__circle.fg {
+  stroke: var(--accent-primary);
+  stroke-dasharray: 339.292;
+  /* 2 * pi * r (r=54) */
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 1s linear, stroke 0.3s;
+  stroke-linecap: round;
+}
+
+.time-display {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -1px;
+}
+
+.pomodoro-controls {
+  display: flex;
+  gap: 12px;
+}
+
+/* Tasks Widget */
+.tasks-widget {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.task-input-group {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.task-input-group input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 16px;
+}
+
+.task-input-group button.btn-primary {
+  padding: 0 20px;
+  font-size: 1.5rem;
+  border-radius: var(--radius-sm);
+}
+
+.task-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 210px;
+  flex: 1;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+}
+
+.task-item:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.task-checkbox {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #cbd5e1;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  transition: var(--transition);
+  background: white;
+}
+
+.task-checkbox:checked {
+  background: var(--accent-success);
+  border-color: var(--accent-success);
+}
+
+.task-checkbox:checked::after {
+  content: '✓';
+  position: absolute;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.task-text {
+  flex: 1;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #a0aec0;
+}
+
+.task-delete {
+  background: none;
+  border: none;
+  color: #cbd5e1;
+  cursor: pointer;
+  opacity: 0;
+  padding: 4px;
+  font-size: 1.1rem;
+  transition: var(--transition);
+}
+
+.task-item:hover .task-delete {
+  opacity: 1;
+}
+
+.task-delete:hover {
+  color: var(--accent-danger);
+}
+
+/* Clocks Widget */
+.clocks-widget {
+  padding: 24px;
+}
+
+.clocks-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  padding-bottom: 8px;
+}
+
+.clock-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  transition: var(--transition);
+}
+
+.clock-item:hover {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+}
+
+.chronograph-wrapper {
+  transform: scale(0.75);
+  height: 105px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chronograph {
+  width: 140px;
+  height: 140px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ffffff, #f1f5f9);
+  border: 6px solid #e2e8f0;
+  position: relative;
+  box-shadow:
+    inset 0 4px 10px rgba(0, 0, 0, 0.05),
+    0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.dial-ring {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.dial-number {
+  position: absolute;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.num-12 {
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.num-3 {
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.num-6 {
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.num-9 {
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.hand {
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  transform-origin: 50% 100%;
+  border-radius: 4px;
+  z-index: 2;
+}
+
+.hour-hand {
+  width: 5px;
+  height: 35px;
+  background: #334155;
+  margin-left: -2.5px;
+}
+
+.minute-hand {
+  width: 4px;
+  height: 48px;
+  background: #64748b;
+  margin-left: -2px;
+}
+
+.second-hand {
+  width: 2px;
+  height: 55px;
+  background: var(--accent-primary);
+  margin-left: -1px;
+  z-index: 3;
+}
+
+.dial-center {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: var(--accent-primary);
+  border-radius: 50%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+  border: 3px solid #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.clock-meta strong {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  text-align: center;
+}
+
+/* Removed Split Grid */
+
+/* Markets Widget */
+.stock-widget {
+  padding: 24px;
+}
+
+.stocks-grid {
+  display: grid;
+  gap: 20px;
+}
+
+.stock-card-pro {
+  background: var(--bg-surface);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.stock-card-pro:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  border-color: #ffffff;
+}
+
+.scp-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+  z-index: 1;
+}
+
+.scp-identity {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.scp-logo-frame {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.scp-logo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 6px;
+}
+
+.scp-title-group h3 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin-bottom: 2px;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+
+.scp-meta {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: normal;
+}
+
+.scp-price-actions {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.scp-price-group {
+  text-align: left;
+}
+
+.scp-price-group h2 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -1px;
+}
+
+.scp-badge {
+  display: inline-block;
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-top: 4px;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 4px 10px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+.scp-badge.up {
+  color: #059669;
+}
+
+.scp-badge.down {
+  color: #dc2626;
+}
+
+.scp-chart-wrapper {
+  width: 100%;
+  height: 90px;
+  margin-top: 4px;
+}
+
+.scp-chart-wrapper svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Hacker News Widget */
+.hn-widget {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.news-feed {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  max-height: 480px;
+}
+
+.news-feed li {
+  background: rgba(255, 255, 255, 0.5);
+  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+  border-left: 3px solid transparent;
+}
+
+.news-feed li:hover {
+  background: rgba(255, 255, 255, 0.9);
+  border-left-color: #f6ad55;
+  /* Warm HN Orange */
+  transform: translateX(6px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.news-feed a {
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  display: block;
+}
+
+/* News Grid Widget */
+.news-widget {
+  padding: 24px;
+}
+
+.news-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.category-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent-secondary);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.news-feed.mini {
+  max-height: 200px;
+}
+
+.news-feed.mini li {
+  padding: 12px 14px;
+  border-left-color: transparent;
+  background: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+  border-radius: 0;
+}
+
+.news-feed.mini li:hover {
+  background: rgba(255, 255, 255, 0.6);
+  border-left-color: var(--accent-secondary);
+  transform: translateX(4px);
+  border-radius: var(--radius-sm);
+}
+
+.news-feed.mini a {
+  font-size: 0.95rem;
+  color: #4a5568;
+}
+
+.news-feed.mini li:hover a {
+  color: var(--text-main);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1600px) {
+  .news-board {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 1300px) {
+  .master-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  #weatherCard {
+    grid-column: 1 / span 2;
+    grid-row: 1 / span 2;
+  }
+
+  #stockCard {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  #hnCard {
+    grid-column: 4;
+    grid-row: 1;
+  }
+
+  .pomodoro-widget {
+    grid-column: 3;
+    grid-row: 2;
+  }
+
+  .tasks-widget {
+    grid-column: 4;
+    grid-row: 2;
+  }
+
+  #clockCard {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    flex-direction: column;
+  }
+
+  .clocks-grid {
+    flex-direction: row;
+    max-height: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  #newsCard {
+    grid-column: 1 / -1;
+    grid-row: 4;
+  }
+}
+
+@media (max-width: 900px) {
+  .top-nav {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .master-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #weatherCard,
+  #stockCard,
+  #hnCard,
+  .pomodoro-widget,
+  .tasks-widget,
+  #newsCard,
+  #clockCard {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .clocks-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .news-board {
+    grid-template-columns: 1fr;
+  }
+}

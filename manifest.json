@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Aesthetic Dashboard New Tab",
+  "description": "A beautiful dashboard featuring weather, clocks, news, stocks, and Hacker News.",
+  "version": "1.0.0",
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "permissions": [
+    "tabs",
+    "browsingData",
+    "system.memory"
+  ],
+  "host_permissions": [
+    "https://geocoding-api.open-meteo.com/*",
+    "https://api.open-meteo.com/*",
+    "https://air-quality-api.open-meteo.com/*",
+    "https://query1.finance.yahoo.com/*",
+    "https://hn.algolia.com/*",
+    "https://hacker-news.firebaseio.com/*",
+    "https://feeds.bbci.co.uk/*",
+    "https://feeds.reuters.com/*",
+    "https://techcrunch.com/*",
+    "https://www.espn.com/*",
+    "https://news.google.com/*"
+  ]
+}

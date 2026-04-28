@@ -5,9 +5,9 @@
 ## 🎥 Video Walkthrough
 Check out the Command Center in action:
 
-[ ![Watch the Video](command_center.jpg) ](https://github.com/Remo-Consultants/CHROME_PLUGIN_EAG_V3/raw/main/walkthrough.mp4)
+[ ![Watch the Video](command_center.jpg) ](https://github.com/Remo-Consultants/CHROME_PLUGIN_EAG_V3/blob/main/walkthrough.mp4)
 
-*(Click the image above to play the video walkthrough)*
+*(Click the image above to view the walkthrough in GitHub's video player)*
 
 A breathtaking, high-performance "New Tab" replacement engineered for peak productivity and visual excellence. Built with modern web technologies, this dashboard provides a premium "Glassmorphic" experience with real-time data aggregation.
 

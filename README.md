@@ -2,9 +2,6 @@
 
 ![Command Center Preview](command_center.jpg)
 
-## 🎥 Video Highlights
-![Command Center Walkthrough](preview.gif)
-
 ## 📺 Project Walkthrough
 Watch the full high-quality demonstration on YouTube:
 [![Command Center YouTube Walkthrough](https://img.youtube.com/vi/8qaJ7O5wDgs/0.jpg)](https://youtu.be/8qaJ7O5wDgs)

@@ -4,7 +4,8 @@
 
 ## 🎥 Video Walkthrough
 Check out the Command Center in action:
-![Command Center Demo](walkthrough.mp4)
+
+<video src="walkthrough.mp4" width="100%" controls></video>
 
 A breathtaking, high-performance "New Tab" replacement engineered for peak productivity and visual excellence. Built with modern web technologies, this dashboard provides a premium "Glassmorphic" experience with real-time data aggregation.
 
